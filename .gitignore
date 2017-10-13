@@ -1,0 +1,15 @@
+/target
+/resources/public/js/compiled
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+*.iml
+/.idea
+.DS_Store
+.hgignore
+.hg/
