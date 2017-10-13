@@ -19,6 +19,7 @@
 
 (defonce frame (JFrame. "Reloadable"))
 
+;Add a watch for when the data changes to refresh the table
 (defonce state (atom [["ABC" 123]
                       ["U" "Me"]]))
 

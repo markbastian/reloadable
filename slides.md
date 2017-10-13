@@ -135,6 +135,86 @@ JFrame frame = new JFrame();
 
 ----
 
+## Some basic imports
+```clojure
+;I'm gonna use this stuff
+(require 
+  '[clojure.pprint :as pp]
+  '[cheshire.core :as ch])
+  
+(import 
+  '(javax.swing JFrame JTable JMenuBar JMenu JMenuItem JSeparator)
+  '(java.awt BorderLayout)
+  '(java.awt.event ActionListener)
+  '(javax.swing.table DefaultTableModel))
+```
+
+----
+
+## Defining the Frame
+```clojure
+;I'm gonna use this stiff
+(defonce frame (JFrame. "Reloadable"))
+
+(defonce state (atom [["ABC" 123]
+                      ["U" "Me"]]))
+```
+
+----
+
+## Basic Swing
+```clojure
+(doto frame
+  (.setLayout (BorderLayout.))
+  (.setSize 800 600)
+  (.setVisible true)
+  (.revalidate))
+```
+
+----
+
+## Add a Table
+```clojure
+(defn model [state]
+  (proxy [DefaultTableModel] []
+    (getRowCount [] (-> @state count))
+    (getColumnCount [] (-> @state first count))
+    (getValueAt [row col] (get-in @state [row col]))))
+    
+(doto frame
+  (.add (JTable. (model state)) BorderLayout/CENTER)
+  (.revalidate))
+```
+
+----
+
+## Add a Menubar
+```clojure
+(defn add-action [component action-fn]
+  (.addActionListener
+    component
+    (reify ActionListener
+      (actionPerformed [this event]
+        (action-fn event)))))
+        
+(doto frame
+  (.setJMenuBar (doto (JMenuBar.)
+                  (.add (doto (JMenu. "File")
+                          (.add (doto (JMenuItem. "Open...")
+                                  (add-action (fn [_] (prn "load")))))
+                          (.add (JMenuItem. "Save..."))
+                          (.add (JMenuItem. "Save as..."))
+                          (.add (JSeparator.))
+                          (.add (doto (JMenuItem. "Exit")
+                                  (add-action #(pp/pprint (bean %)))))))
+                  (.add (doto (JMenu. "Edit")))
+                  (.add (doto (JMenu. "Tools")))
+                  (.add (doto (JMenu. "Help")))))
+  (.revalidate))
+```
+
+----
+
 ## Solution: Quil
 * “Clojure/ClojureScript library for creating interactive drawings and animations.” 
 * http://quil.info
