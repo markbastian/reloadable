@@ -2,14 +2,17 @@
   (:require [clojure.pprint :as pp]
             [cheshire.core :as ch])
   (:import (javax.swing JFrame JTable JMenuBar JMenu JMenuItem JSeparator)
-           (java.awt BorderLayout)
+           (java.awt BorderLayout Color)
            (java.awt.event ActionListener)
-           (javax.swing.table DefaultTableModel)))
+           (javax.swing.table DefaultTableModel DefaultTableCellRenderer)))
 
-;https://github.com/toddmotto/public-apis#weather
-;https://www.metaweather.com/api/
-;https://www.metaweather.com/api/location/search/?query=boise
-;https://www.metaweather.com/api/location/2366355/
+(def cell-renderer
+  (proxy [DefaultTableCellRenderer] []
+    (getTableCellRendererComponent [table color selected? has-focus? row col]
+      (let [s (proxy-super getTableCellRendererComponent table color selected? has-focus? row col)]
+        (doto s
+          (.setBackground (if (even? row) Color/LIGHT_GRAY Color/WHITE)))))))
+
 (defn add-action [component action-fn]
   (.addActionListener
     component
@@ -24,10 +27,20 @@
                       ["U" "Me"]]))
 
 (defn model [state]
-  (proxy [DefaultTableModel] []
-    (getRowCount [] (-> @state count))
-    (getColumnCount [] (-> @state first count))
-    (getValueAt [row col] (get-in @state [row col]))))
+  (let [m (proxy [DefaultTableModel] []
+            (getRowCount [] (-> @state count))
+            (getColumnCount [] (-> @state first count))
+            (getValueAt [row col] (get-in @state [row col]))
+            (setValueAt [o row col] (swap! state assoc-in [row col] o))
+            (isCellEditable [row col] true)
+            )]
+    #_(add-watch state :table-model-updater
+               (fn [_ _ o n]
+                 (when (not= o n)
+                   (doto m
+                     (.fireTableDataChanged)
+                     (.fireTableStructureChanged)))))
+    m))
 
 (doto frame
   (.setLayout (BorderLayout.))
@@ -43,8 +56,12 @@
                   (.add (doto (JMenu. "Edit")))
                   (.add (doto (JMenu. "Tools")))
                   (.add (doto (JMenu. "Help")))))
-  (.add (JTable. (model state)) BorderLayout/CENTER)
-  (.setSize 800 600)
+  (.add (doto (JTable. (model state))
+          (.setGridColor Color/BLACK)
+          (.setDefaultRenderer Object cell-renderer)
+          )
+        BorderLayout/CENTER)
+  (.setSize 600 400)
   (.setVisible true)
   (.revalidate))
 
