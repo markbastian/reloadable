@@ -10,7 +10,7 @@
   (-> c (* 9) (/ 5) (+ 32.0)))
 
 (defonce app (doto (JFrame. "F2C")
-               (.setSize 400 400)
+               (.setSize 400 150)
                (.setVisible true)))
 
 (defonce state (atom {:celsius 100.0}))
@@ -20,14 +20,14 @@
 
 (doto app
   (.setLayout (BorderLayout.))
-  (.add (doto (Box/createHorizontalBox)
-          (.add (JLabel. "C: "))
-          (.add c-field))
-        BorderLayout/NORTH)
-  (.add (doto (Box/createHorizontalBox)
-          (.add (JLabel. "F: "))
-          (.add f-field))
-        BorderLayout/SOUTH)
+  (.add (doto (Box/createVerticalBox)
+          (.add (doto (Box/createHorizontalBox)
+                  (.add (JLabel. "C: "))
+                  (.add c-field)))
+          (.add (doto (Box/createHorizontalBox)
+                  (.add (JLabel. "F: "))
+                  (.add f-field))))
+        BorderLayout/CENTER)
   (.revalidate))
 
 (.addActionListener
