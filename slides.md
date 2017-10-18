@@ -135,6 +135,48 @@ JFrame frame = new JFrame();
 
 ----
 
+## Solution: Quil
+* “Clojure/ClojureScript library for creating interactive drawings and animations.” 
+* http://quil.info
+* sketches can be run as Java or JavaScript apps
+
+----
+
+## Solution: Figwheel
+* "Figwheel builds your ClojureScript code and hot loads it into the browser as you are coding!"
+* https://github.com/bhauman/lein-figwheel
+* Can be used seamlessly with Reagent(React), Node, or plain JS
+* Has a REPL and a host of other development and debugging tools
+* Can use external client while coding
+
+---
+
+## Conclusions
+<small>
+* Reloadable code is a very effective and fun technique for rapid application development
+* It drastically reduces development time and keeps the developer engaged
+* Clojure(Script) approaches facilitate interactive development
+  * Clojure's data-centric approach makes state continuity much easier than other approaches
+  * Several options: REPL, Quil, Figwheel
+* Give it a try!
+
+</small>
+
+---
+
+# Extras
+
+----
+
+# Questions
+* References
+  * http://worrydream.com/dbx/
+  * lighttable
+  * quil
+  * figwheel
+  
+----
+
 ## Some basic imports
 ```clojure
 ;I'm gonna use this stuff
@@ -212,45 +254,3 @@ JFrame frame = new JFrame();
                   (.add (doto (JMenu. "Help")))))
   (.revalidate))
 ```
-
-----
-
-## Solution: Quil
-* “Clojure/ClojureScript library for creating interactive drawings and animations.” 
-* http://quil.info
-* sketches can be run as Java or JavaScript apps
-
-----
-
-## Solution: Figwheel
-* "Figwheel builds your ClojureScript code and hot loads it into the browser as you are coding!"
-* https://github.com/bhauman/lein-figwheel
-* Can be used seamlessly with Reagent(React), Node, or plain JS
-* Has a REPL and a host of other development and debugging tools
-* Can use external client while coding
-
----
-
-## Conclusions
-<small>
-* Reloadable code is a very effective and fun technique for rapid application development
-* It drastically reduces development time and keeps the developer engaged
-* Clojure(Script) approaches facilitate interactive development
-  * Clojure's data-centric approach makes state continuity much easier than other approaches
-  * Several options: REPL, Quil, Figwheel
-* Give it a try!
-
-</small>
-
----
-
-# Extras
-
-----
-
-# Questions
-* References
-  * http://worrydream.com/dbx/
-  * lighttable
-  * quil
-  * figwheel
