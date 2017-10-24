@@ -4,11 +4,18 @@
            (java.awt.event ActionListener)))
 
 ;;; Convenience functions
-(defn f->c [f]
-  (-> f (- 32.0) (/ 9) (* 5)))
+(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
+(defn kelvin->rankine [k] (/ (* k 9.0) 5.0))
+(defn celsius->kelvin [c] (+ c 273.15))
+(defn kelvin->celsius [c] (- c 273.15))
+(defn farenheit->rankine [f] (+ f 459.67))
+(defn rankine->farenheit [f] (- f 459.67))
 
-(defn c->f [c]
-  (-> c (* 9) (/ 5) (+ 32.0)))
+(def farenheit->celsius
+  (comp kelvin->celsius rankine->kelvin farenheit->rankine))
+
+(def celsius->farenheit
+  (comp rankine->farenheit kelvin->rankine celsius->kelvin))
 
 (defn add-action [component func]
   (.addActionListener
@@ -32,7 +39,7 @@
 #_
 (defonce c-field (JTextField. (-> @state :celsius str)))
 #_
-(defonce f-field (JTextField. (-> @state :celsius c->f str)))
+(defonce f-field (JTextField. (-> @state :celsius celsius->farenheit str)))
 
 ;Existence proof
 ;(:text (bean c-field))
@@ -62,7 +69,7 @@
 #_
 (add-action
   f-field
-  (fn [_ _] (swap! state assoc :celsius (f->c (read-string (.getText f-field))))))
+  (fn [_ _] (swap! state assoc :celsius (farenheit->celsius (read-string (.getText f-field))))))
 
 ;No link from state to form fields.
 ;(swap! state assoc :celsius 10)
@@ -76,4 +83,4 @@
   (fn [_ _ o n]
     (when (not= o n)
       (.setText c-field (str (:celsius n)))
-      (.setText f-field (-> n :celsius c->f str)))))
+      (.setText f-field (-> n :celsius celsius->farenheit str)))))

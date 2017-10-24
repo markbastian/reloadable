@@ -417,3 +417,28 @@ notifying browser that file changed:  out\tetris\core.js
 [0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
 notifying browser that file changed:  out\tetris\core.js
 [32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.231 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+[31mCompiling "resources/public/js/compiled/tetris.js" failed.
+[0mANALYSIS ERROR: No such namespace: clojure.pprint, could not locate clojure/pprint.cljs, clojure/pprint.cljc, or Closure namespace "clojure.pprint" in file src\main\cljc\flocking\game_launcher.cljc on file null, line null, column null
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 1.038 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+[31mCompiling "resources/public/js/compiled/tetris.js" failed.
+[0mANALYSIS ERROR: No such namespace: clojure.pprint, could not locate clojure/pprint.cljs, clojure/pprint.cljc, or Closure namespace "clojure.pprint" in file src\main\cljc\flocking\game_launcher.cljc on file null, line null, column null
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.651 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+notifying browser that file changed:  resources/public/js/compiled/out/goog/deps.js
+notifying browser that file changed:  resources/public/js/compiled/out/cljs_deps.js
+notifying browser that file changed:  out\flocking\game_launcher.js
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.866 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+notifying browser that file changed:  out\tetris\rules.js
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.677 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+notifying browser that file changed:  out\tetris\rules.js
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.597 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+notifying browser that file changed:  out\tetris\core.js
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.435 seconds.[0m
+[0mCompiling "resources/public/js/compiled/tetris.js" from ["src/main/cljs" "src/main/cljc"]...
+notifying browser that file changed:  out\tetris\core.js
+[32mSuccessfully compiled "resources/public/js/compiled/tetris.js" in 0.489 seconds.[0m

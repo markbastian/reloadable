@@ -23,18 +23,6 @@ Mark Bastian
 
 ----
 
-### Developer time is precious
-* We want to maximize actual coding time
-* This also minimizes time to deployment
-
-----
-
-### We spend most of our time in a development feature feedback loop
-* You exit the loop when the feature is complete
-* The loop starts again with a new feature or when you need to improve/debug an existing feature
-
-----
-
 ### Development Models & The Feature Feedback Loop
 | Model               | Cycle Time        | Tooling       | State |
 | ------------------- | ----------------- |:-------------:| -----:|
@@ -44,7 +32,7 @@ Mark Bastian
 
 ---
 
-# The Solution: Reloadability
+## (Part of) The Solution: Reloadability
 
 ----
 
@@ -59,6 +47,7 @@ Mark Bastian
 * Contrast with Edit, Save, Refresh
   * You manually refresh/restart your client
   * State is lost
+* Contrast with client refresh
   
 </small>
 
@@ -72,6 +61,31 @@ Mark Bastian
 * Interactivity
   * REPL: Read-Evaluate-Print-Loop
   * I can interactively and dynamically update both value and behavioral aspects of my application without the need to rebuild it
+
+----
+
+#### Complected State Model
+<img src="resources/public/temperature.png" width="80%">
+
+----
+
+#### Decomplected State Model
+```clojure
+(defonce state (atom {:celsius 100.0}))
+
+(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
+(defn kelvin->rankine [k] (/ (* k 9.0) 5.0))
+(defn celsius->kelvin [c] (+ c 273.15))
+(defn kelvin->celsius [c] (- c 273.15))
+(defn farenheit->rankine [f] (+ f 459.67))
+(defn rankine->farenheit [f] (- f 459.67))
+
+(def farenheit->celsius
+  (comp kelvin->celsius rankine->kelvin farenheit->rankine))
+
+(def celsius->farenheit
+  (comp rankine->farenheit kelvin->rankine celsius->kelvin))
+```
 
 ---
 
@@ -90,6 +104,7 @@ Mark Bastian
 * Both interop very well in both directions with their host platforms
   * Makes use of wide variety of existing libraries (Maven central, npm)
 * Learn more at https://clojure.org/ and https://clojurescript.org/
+* Clojure's design facilitates reloadable code
 
 </small>
 
@@ -97,8 +112,13 @@ Mark Bastian
 
 ### Data
 ```clojure
-[{:a :map} #{:a :set} '(:a :list)]
+[1 3 :3 "4"] ;A vector
+{:name "Mark"} ;A map
+#{:A "B" \C 1} ;A set 
+'(2 3) ;A list
 ```
+<small>Clojure state is typically modeled using these structures</small>
+
 ----
 
 ### Behavior
@@ -109,7 +129,31 @@ Mark Bastian
   
 ;A lambda
 #(+ %1 %2)
+
+;As seen previously
+(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
 ```
+----
+
+### Compared
+
+```clojure
+;Non-idiomatic
+(rankine->farenheit (kelvin->rankine (celsius->kelvin 100.0)))
+```
+
+```clojure
+;Idiomatic
+(-> 100.0 celsius->kelvin kelvin->rankine rankine->farenheit)
+```
+
+```java
+;Java
+new Celsius(100.0).toKelvin().toRankine().toFarenheit().getValue();
+```
+
+<small class="fragment">You should avoid languages with lots of parenthesis!</small>
+
 ----
 
 ### Interop
@@ -131,7 +175,7 @@ JFrame frame = new JFrame();
 ## Solution: Reloadable Swing
 * Define a single JFrame (e.g. using defonce)
 * A REPL environment is required
-* Can this be done with JShell?
+* Alternatives?
 
 ----
 
@@ -254,3 +298,17 @@ JFrame frame = new JFrame();
                   (.add (doto (JMenu. "Help")))))
   (.revalidate))
 ```
+
+----
+
+### We spend most of our time in a development feature feedback loop
+* You exit the loop when the feature is complete
+* The loop starts again with a new feature or when you need to improve/debug an existing feature
+
+----
+
+### Developer time is precious
+* We want to maximize actual coding time
+* This also minimizes time to deployment
+
+----

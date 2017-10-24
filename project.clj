@@ -27,6 +27,7 @@
              :cljs {:plugins [[lein-cljsbuild "1.1.2"]] }}
 
   :source-paths ["src/main/clj" "src/main/cljc"]
+  :java-source-paths ["src/main/java"]
 
   :clj {:builds [{ :source-paths ["src/main/clj" "src/main/cljc" "test"] }]}
 
