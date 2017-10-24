@@ -32,40 +32,35 @@ Mark Bastian
 
 ---
 
-## (Part of) The Solution: Reloadability
+## Reducing Development Time with Reloadability
 
 ----
 
 ### What is Reloadable Code
-<small>
-* You make changes to your code
-* You save or reload the file
-* Changes are immediately propagated into your running client process and displayed
-* Fundamental advantages
-  * There is no need to refresh, restart, or otherwise interact with your client
-  * State is preserved
-* Contrast with Edit, Save, Refresh
-  * You manually refresh/restart your client
-  * State is lost
-* Contrast with client refresh
-  
-</small>
-
-----
-
-### Facilitating Reloadability
-* State as a value
-  * A simple representation that is easy to maintain
-* Top-level behaviors decomplected from state
-  * I can redefine functions without having to reload my value
-* Interactivity
-  * REPL: Read-Evaluate-Print-Loop
-  * I can interactively and dynamically update both value and behavioral aspects of my application without the need to rebuild it
+* Change code
+* Initiate editor refresh
+* Only desired changes are propagated
+* No manual client refresh or state restoration
 
 ----
 
 #### Complected State Model
 <img src="resources/public/temperature.png" width="80%">
+
+----
+
+#### Interface: Behavior
+<img src="resources/public/interface.svg "width="80%">
+
+----
+
+#### Simple State Model
+<img src="resources/public/classes.png">
+
+----
+
+#### Complected State Model
+<img src="resources/public/oop.png" width="80%">
 
 ----
 
@@ -85,85 +80,6 @@ Mark Bastian
 
 (def celsius->farenheit
   (comp rankine->farenheit kelvin->rankine celsius->kelvin))
-```
-
----
-
-# Fundamentals
-
-----
-
-### Clojure(Script)
-<small>
-* Clojure is a modern Lisp dialect that is hosted on the JVM
-  * Compiles to JVM bytecode
-  * Data oriented and functional
-* ClojureScript is a dialect of Clojure
-  * Very few differences
-  * Uses the Google Closure compiler to transpile Clojure code into JavaScript
-* Both interop very well in both directions with their host platforms
-  * Makes use of wide variety of existing libraries (Maven central, npm)
-* Learn more at https://clojure.org/ and https://clojurescript.org/
-* Clojure's design facilitates reloadable code
-
-</small>
-
-----
-
-### Data
-```clojure
-[1 3 :3 "4"] ;A vector
-{:name "Mark"} ;A map
-#{:A "B" \C 1} ;A set 
-'(2 3) ;A list
-```
-<small>Clojure state is typically modeled using these structures</small>
-
-----
-
-### Behavior
-```clojure
-;A regular function
-(defn my-function [arg-1 arg-2]
-  (+ arg-1 arg-2))
-  
-;A lambda
-#(+ %1 %2)
-
-;As seen previously
-(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
-```
-----
-
-### Compared
-
-```clojure
-;Non-idiomatic
-(rankine->farenheit (kelvin->rankine (celsius->kelvin 100.0)))
-```
-
-```clojure
-;Idiomatic
-(-> 100.0 celsius->kelvin kelvin->rankine rankine->farenheit)
-```
-
-```java
-;Java
-new Celsius(100.0).toKelvin().toRankine().toFarenheit().getValue();
-```
-
-<small class="fragment">You should avoid languages with lots of parenthesis!</small>
-
-----
-
-### Interop
-Clojure
-```clojure
-(def frame (JFrame.))
-```
-Java
-```java
-JFrame frame = new JFrame();
 ```
 
 ---
@@ -192,6 +108,14 @@ JFrame frame = new JFrame();
 * Can be used seamlessly with Reagent(React), Node, or plain JS
 * Has a REPL and a host of other development and debugging tools
 * Can use external client while coding
+
+----
+
+### Facilitating Reloadability
+* State represented as value
+* State management independent of value
+* Behavior decomplected from state
+* Interactivity
 
 ---
 
@@ -312,3 +236,83 @@ JFrame frame = new JFrame();
 * This also minimizes time to deployment
 
 ----
+---
+
+# Fundamentals
+
+----
+
+### Clojure(Script)
+<small>
+* Clojure is a modern Lisp dialect that is hosted on the JVM
+  * Compiles to JVM bytecode
+  * Data oriented and functional
+* ClojureScript is a dialect of Clojure
+  * Very few differences
+  * Uses the Google Closure compiler to transpile Clojure code into JavaScript
+* Both interop very well in both directions with their host platforms
+  * Makes use of wide variety of existing libraries (Maven central, npm)
+* Learn more at https://clojure.org/ and https://clojurescript.org/
+* Clojure's design facilitates reloadable code
+
+</small>
+
+----
+
+### Data
+```clojure
+[1 3 :3 "4"] ;A vector
+{:name "Mark"} ;A map
+#{:A "B" \C 1} ;A set 
+'(2 3) ;A list
+```
+<small>Clojure state is typically modeled using these structures</small>
+
+----
+
+### Behavior
+```clojure
+;A regular function
+(defn my-function [arg-1 arg-2]
+  (+ arg-1 arg-2))
+  
+;A lambda
+#(+ %1 %2)
+
+;As seen previously
+(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
+```
+----
+
+### Compared
+
+```clojure
+;Non-idiomatic
+(rankine->farenheit (kelvin->rankine (celsius->kelvin 100.0)))
+```
+
+```clojure
+;Idiomatic
+(-> 100.0 celsius->kelvin kelvin->rankine rankine->farenheit)
+```
+
+```java
+;Java
+new Celsius(100.0).toKelvin().toRankine().toFarenheit().getValue();
+```
+
+<small class="fragment">You should avoid languages with lots of parenthesis!</small>
+
+----
+
+### Interop
+Clojure
+```clojure
+(def frame (JFrame.))
+```
+Java
+```java
+JFrame frame = new JFrame();
+```
+
+

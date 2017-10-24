@@ -14,16 +14,16 @@
             :fuel-mass 10
             :max-landing-velocity 10 }})
 
-;No gravity
-;(def gravity 0)
+;Sun
+(def gravity -300.0)                                        ;30ish x Earth
+;Jupiter
+;(def gravity -24.79)
 ;Earth
 ;(def gravity -9.81)
 ;Moon
 ;(def gravity -1.622)
-;Jupiter
-(def gravity -24.79)
-;Upside down
-;(def gravity 9.81)
+;No gravity
+;(def gravity 0)
 
 (defn flatten-landing-zones [terrain lzs]
   (reduce
