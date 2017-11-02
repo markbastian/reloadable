@@ -32,6 +32,108 @@ Mark Bastian
 
 ---
 
+## Example: Temperature Converter App
+
+----
+
+## Start with Basic Frame
+
+```java
+public class Main {
+    public static void main(String[] args){
+        JFrame app = new JFrame("F2C");
+        app.setSize(400, 150);
+        app.setLayout(new BorderLayout());
+        app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        app.setVisible(true);
+    }
+}
+```
+
+----
+
+## Run it!
+<img src="resources/public/run.png">
+<img src="resources/public/empty.png" class="fragment">
+
+----
+
+## Add UI Elements
+
+```java
+public class Main {
+    public static void main(String[] args){
+        JFrame app = new JFrame("F2C");
+        app.setSize(400, 150);
+        app.setLayout(new BorderLayout());
+        app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        //The Celsius box
+        Box cRow = Box.createHorizontalBox();
+        cRow.add(new JLabel("C: "));
+        JTextField cField = new JTextField();
+        cRow.add(cField);
+
+        //The Farenheit box
+        Box fRow = Box.createHorizontalBox();
+        fRow.add(new JLabel("F: "));
+        JTextField fField = new JTextField();
+        fRow.add(fField);
+
+        //The temp box containers
+        Box box = Box.createVerticalBox();
+        box.add(cRow);
+        box.add(fRow);
+        app.add(box, BorderLayout.CENTER);
+
+        app.setVisible(true);
+    }
+}
+```
+
+----
+
+## Run it!
+<img src="resources/public/run.png">
+<img src="resources/public/f2c.png" class="fragment">
+
+----
+
+## Step 3: Add Model
+<img src="resources/public/interface.svg "width="80%">
+
+----
+
+## Step 4: Implement Model
+<img src="resources/public/oop.png "width="80%">
+
+----
+
+## Step 5: Other details
+* Listeners
+* PropertyChangeSupport
+* As you add new features:
+
+<img src="resources/public/run.png">
+
+----
+
+## Additional Steps
+* Ensure model correctness
+* Attach model to UI
+* With every change:
+
+<img src="resources/public/run.png">
+
+----
+
+## What if I could reload?
+* JShell?
+* Model value and behavior are complected
+* Most changes = full reload
+
+---
+
 ## Reducing Development Time with Reloadability
 
 ----
@@ -41,21 +143,26 @@ Mark Bastian
 * Initiate editor refresh
 * Only desired changes are propagated
 * No manual client refresh or state restoration
+* No relaunches - one process!
 
 ----
 
-#### Complected State Model
-<img src="resources/public/temperature.png" width="80%">
+## Requirements
+* A long running repl process
+* Separated concerns
+  * Value (fields)
+  * Behavior (methods)
+  * State (mutable fields + change support)
 
 ----
 
-#### Interface: Behavior
-<img src="resources/public/interface.svg "width="80%">
-
-----
-
-#### Simple State Model
-<img src="resources/public/classes.png">
+## REPL
+* Read-Evaluate-Print-Loop
+* A process that allows you to interactively develop code
+* JShell
+* Scala REPL
+* Python Shell
+* Clojure Repl
 
 ----
 
