@@ -12,19 +12,24 @@
 (defn rankine->farenheit [f] (- f 459.67))
 
 (def farenheit->celsius
-  (comp kelvin->celsius rankine->kelvin farenheit->rankine))
+  (comp kelvin->celsius
+        rankine->kelvin
+        farenheit->rankine))
 
 (def celsius->farenheit
-  (comp rankine->farenheit kelvin->rankine celsius->kelvin))
+  (comp rankine->farenheit
+        kelvin->rankine
+        celsius->kelvin))
 
 (defn add-action [component func]
   (.addActionListener
     component
     (reify ActionListener
-      (actionPerformed [this event] (func this event)
-        #_(swap! state assoc :celsius (read-string (.getText c-field)))))))
+      (actionPerformed [this event]
+        (func this event)))))
 
-;NOTE: ns-level values can be encapsulated into a function once everything is working.
+;NOTE: ns-level values can be encapsulated into a
+; function once everything is working.
 
 ;;; Our singleton application
 (defonce app (doto (JFrame. "F2C")
@@ -34,10 +39,21 @@
 ;Our singleton app state
 (defonce state (atom {:celsius 100.0}))
 
-;;; Fields to be added. We don't define these inline since we want to manipulate them later.
-;Note that you could wrap these up using functions/doto such that you never see the variable names.
-;(defonce c-field (JTextField. (-> @state :celsius str)))
-;(defonce f-field (JTextField. (-> @state :celsius celsius->farenheit str)))
+;;; Fields to be added. We don't define these inline
+;;; since we want to manipulate them later.
+;Note that you could wrap these up using functions/doto
+; such that you never see the variable names.
+(defonce ^JTextField c-field
+         (JTextField.
+           (-> @state
+               :celsius
+               str)))
+(defonce ^JTextField f-field
+         (JTextField.
+           (-> @state
+               :celsius
+               celsius->farenheit
+               str)))
 
 ;;; Add fields to app
 #_
@@ -60,11 +76,24 @@
 #_
 (add-action
   c-field
-  (fn [_ _] (swap! state assoc :celsius (read-string (.getText c-field)))))
+  (fn [_ _]
+    (swap!
+      state
+      assoc
+      :celsius
+      (-> c-field .getText read-string))))
 #_
 (add-action
   f-field
-  (fn [_ _] (swap! state assoc :celsius (farenheit->celsius (read-string (.getText f-field))))))
+  (fn [_ _]
+    (swap!
+      state
+      assoc
+      :celsius
+      (-> f-field
+          .getText
+          read-string
+          farenheit->celsius))))
 
 ;No link from state to form fields.
 ;(swap! state assoc :celsius 10)
@@ -77,5 +106,7 @@
   :values-changed
   (fn [_ _ o n]
     (when (not= o n)
-      (.setText c-field (str (:celsius n)))
-      (.setText f-field (-> n :celsius celsius->farenheit str)))))
+      (.setText c-field
+                (str (:celsius n)))
+      (.setText f-field
+                (-> n :celsius celsius->farenheit str)))))

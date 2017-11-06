@@ -2,37 +2,10 @@
 Mark Bastian
 <br>November 9, 2017
 
-----
-
-# Overview
-* Time
-* Reloadable Code
-* Solutions
-* Demos
-
 ---
 
-# The Time Problem
-
-----
-
-### Time: How much time do you spend...
-* ...waiting for code to compile?
-* ...getting your application into a testable/debuggable state?
-* ...doing actual coding?
-
-----
-
-### Development Models & The Feature Feedback Loop
-| Model               | Cycle Time        | Tooling       | State |
-| ------------------- | ----------------- |:-------------:| -----:|
-| Edit, Compile, Run  | Minutes-Hours     | Static        | Lost  |
-| Edit, Save, Refresh | Seconds-Minutes   | Dynamic       | Lost  |
-| Edit, Save, Reload  | Immediate-Seconds | Dynamic       | Saved |
-
----
-
-## Example: Temperature Converter App
+## Motivating Example:
+## Develop a Temperature Converter
 
 ----
 
@@ -105,16 +78,19 @@ public class Main {
 ----
 
 ## Step 4: Implement Model
-<img src="resources/public/oop.png "width="80%">
+<img src="resources/public/oop.png "width="60%">
+```java
+Temperature model = new Celcius(100.0);
+```
 
 ----
 
 ## Step 5: Other details
-* Listeners
-* PropertyChangeSupport
+* Listeners (e.g. UI events, model change events)
+* PropertyChangeSupport (e.g. Model<->View sync)
 * As you add new features:
 
-<img src="resources/public/run.png">
+<img class="fragment" src="resources/public/run.png">
 
 ----
 
@@ -123,75 +99,33 @@ public class Main {
 * Attach model to UI
 * With every change:
 
-<img src="resources/public/run.png">
+<img class="fragment" src="resources/public/run.png">
 
 ----
 
 ## What if I could...
 * Launch my program once
-* Update behavior and state independently
-* Challenges
-  * state, value, and behavior are complected
-  * Most changes = full reload
+* Update code (behavior or state)
+* Immediately see the effects
+* While preserving state
 
 ---
 
-## Reducing Development Time with Reloadability
+# Reloadable Code
 
 ----
 
 ### What is Reloadable Code
+* Application in a long-running process
 * Change code
-* Initiate editor refresh
-* Only desired changes are propagated
-* No manual client refresh or state restoration
-* No relaunches - one process!
+* Trigger refresh (e.g. save source, execute command)
+* Changes are propagated
+* No
+   * manual client refresh
+   * loss of state
+   * relaunches
 
 ----
-
-## Requirements
-* A long running repl process
-* Separated concerns
-  * Value (fields)
-  * Behavior (methods)
-  * State (mutable fields + change support)
-
-----
-
-## REPL
-* Read-Evaluate-Print-Loop
-* A process that allows you to interactively develop code
-* JShell
-* Scala REPL
-* Python Shell
-* Clojure Repl
-
-----
-
-#### Complected State Model
-<img src="resources/public/oop.png" width="80%">
-
-----
-
-#### Decomplected State Model
-```clojure
-(defonce state (atom {:celsius 100.0}))
-
-(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
-(defn kelvin->rankine [k] (/ (* k 9.0) 5.0))
-(defn celsius->kelvin [c] (+ c 273.15))
-(defn kelvin->celsius [c] (- c 273.15))
-(defn farenheit->rankine [f] (+ f 459.67))
-(defn rankine->farenheit [f] (- f 459.67))
-
-(def farenheit->celsius
-  (comp kelvin->celsius rankine->kelvin farenheit->rankine))
-
-(def celsius->farenheit
-  (comp rankine->farenheit kelvin->rankine celsius->kelvin))
-```
-
----
 
 # Solutions & Examples
 
@@ -422,6 +356,70 @@ Clojure
 Java
 ```java
 JFrame frame = new JFrame();
+```
+
+----
+
+### Time: How much time do you spend...
+* ...waiting for code to compile?
+* ...getting your application into a testable/debuggable state?
+* ...doing actual coding?
+
+----
+
+### Development Models & The Feature Feedback Loop
+| Model               | Cycle Time        | Tooling       | State |
+| ------------------- | ----------------- |:-------------:| -----:|
+| Edit, Compile, Run  | Minutes-Hours     | Static        | Lost  |
+| Edit, Save, Refresh | Seconds-Minutes   | Dynamic       | Lost  |
+| Edit, Save, Reload  | Immediate-Seconds | Dynamic       | Saved |
+
+---
+
+## Example: Temperature Converter App
+
+----
+
+## Requirements
+* A long running repl process
+* Separated concerns
+  * Value (fields)
+  * Behavior (methods)
+  * State (mutable fields + change support)
+
+----
+
+## REPL
+* Read-Evaluate-Print-Loop
+* A process that allows you to interactively develop code
+* JShell
+* Scala REPL
+* Python Shell
+* Clojure Repl
+
+----
+
+#### Complected State Model
+<img src="resources/public/oop.png" width="80%">
+
+----
+
+#### Decomplected State Model
+```clojure
+(defonce state (atom {:celsius 100.0}))
+
+(defn rankine->kelvin [r] (/ (* r 5.0) 9.0))
+(defn kelvin->rankine [k] (/ (* k 9.0) 5.0))
+(defn celsius->kelvin [c] (+ c 273.15))
+(defn kelvin->celsius [c] (- c 273.15))
+(defn farenheit->rankine [f] (+ f 459.67))
+(defn rankine->farenheit [f] (- f 459.67))
+
+(def farenheit->celsius
+  (comp kelvin->celsius rankine->kelvin farenheit->rankine))
+
+(def celsius->farenheit
+  (comp rankine->farenheit kelvin->rankine celsius->kelvin))
 ```
 
 
