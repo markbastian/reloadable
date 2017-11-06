@@ -36,11 +36,8 @@
 
 ;;; Fields to be added. We don't define these inline since we want to manipulate them later.
 ;Note that you could wrap these up using functions/doto such that you never see the variable names.
-(defonce c-field (JTextField. (-> @state :celsius str)))
-(defonce f-field (JTextField. (-> @state :celsius celsius->farenheit str)))
-
-;Existence proof
-;(:text (bean c-field))
+;(defonce c-field (JTextField. (-> @state :celsius str)))
+;(defonce f-field (JTextField. (-> @state :celsius celsius->farenheit str)))
 
 ;;; Add fields to app
 #_

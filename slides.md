@@ -127,10 +127,12 @@ public class Main {
 
 ----
 
-## What if I could reload?
-* JShell?
-* Model value and behavior are complected
-* Most changes = full reload
+## What if I could...
+* Launch my program once
+* Update behavior and state independently
+* Challenges
+  * state, value, and behavior are complected
+  * Most changes = full reload
 
 ---
 
