@@ -103,7 +103,6 @@
     (do
       (q/background 0 0 0)
       (draw-stats state)
-
       (q/translate (* 0.5 w) h)
       (q/scale 1 -1)
       (q/scale (/ min-screen-dim max-world-dim))

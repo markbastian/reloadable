@@ -25,7 +25,7 @@
     :key-released (fn [s] (assoc-in s [:lander :thrust] 0))))
 
 #?(:clj (defn launch []
-          (launch-sketch { :width 800 :height 600 })))
+          (launch-sketch { :width 640 :height 480 })))
 
 #?(:cljs (defn ^:export launch[host width height]
            (launch-sketch { :width width :height height :host host})))
