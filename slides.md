@@ -85,19 +85,11 @@ Temperature model = new Celcius(100.0);
 
 ----
 
-## Step 5: Other details
+## Additional Steps
 * Listeners (e.g. UI events, model change events)
 * PropertyChangeSupport (e.g. Model<->View sync)
+* Restoring State & Debugging
 * As you add new features:
-
-<img class="fragment" src="resources/public/run.png">
-
-----
-
-## Additional Steps
-* Ensure model correctness
-* Attach model to UI
-* With every change:
 
 <img class="fragment" src="resources/public/run.png">
 

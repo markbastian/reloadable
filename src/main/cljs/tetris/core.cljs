@@ -118,8 +118,8 @@
                                                       (locked [i j]) :blue
                                                       (sc [i j]) :orange
                                                       :default :black) }]))]
-            [:h4 (str "Score: " score)]
-            [:h4 (str "High Score: " high-score)]]))
+            #_[:h4 (str "Score: " score)]
+            #_[:h4 (str "High Score: " high-score)]]))
 
 ;Comment out swap! form to pause the action.
 (defn sim [state] (swap! state game-step))
