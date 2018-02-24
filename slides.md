@@ -1,6 +1,12 @@
-## Interactive Development with Reloadable Code
-Mark Bastian
-<br>November 9, 2017
+## <span style="color:red">Interactive Development with Reloadable Code</span>
+### Mark Bastian
+### Clearwater Analytics
+<p><small>February 23, 2018<small>
+
+----
+
+## The Coding Cycle
+<img src="resources/public/codecycle.png" width="500">
 
 ---
 
@@ -92,6 +98,11 @@ Temperature model = new Celcius(100.0);
 * As you add new features:
 
 <img class="fragment" src="resources/public/run.png">
+
+----
+
+## The Coding Cycle
+<img src="resources/public/codecycle.png" width="500">
 
 ----
 
